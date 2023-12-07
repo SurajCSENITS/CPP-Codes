@@ -10,10 +10,6 @@ using namespace std;
 #include <list>
 #include <bits/stdc++.h>
 
-// global vectors required to store connected components
-vector<vector<int>> cc;
-vector<int> current_cc;
-
 class Graph
 {
 public:
@@ -67,7 +63,20 @@ public:
     }
 };
 
-
+bool isCyclePresent(Graph g)
+{
+    bool isLoopExist= false;
+    for(int i=1;i<=g.v;i++){
+        if(g.visited[i])
+            continue;
+        if(g.isCyclic(i, 0)){
+            isLoopExist= true;
+            break;
+        }
+    }
+    
+    return isLoopExist;
+}
 
 int main(){
 
@@ -86,7 +95,7 @@ int main(){
             break;
         }
     }
-    cout<<isLoopExist<<endl;
+    cout<<isCyclePresent(g)<<endl;
 
 return 0;    
 }

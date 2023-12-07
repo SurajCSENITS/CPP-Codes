@@ -10,18 +10,14 @@ using namespace std;
 #include <list>
 #include <bits/stdc++.h>
 
-// global vectors required to store connected components
-vector<vector<int>> cc;
-vector<int> current_cc;
-
 class Graph
 {
-public:
+private:
     int v;
     int e;
     vector<vector<int>> dynamic_2d_vector;
     bool* visited;
-
+public:
     Graph(int vert, int edge){
         v= vert;
         e= edge;
@@ -47,27 +43,22 @@ public:
                 cout<<dynamic_2d_vector[i][j]<<" ";
             cout<< endl;
         }
-    } 
-    bool isCyclic(int vertex, int par) {
-        visited[vertex]= true;
-        bool isLoopExist= false;
-        for(int child: dynamic_2d_vector[vertex]){
-            if(visited[child] && child==par)
-                continue;
-            if(visited[child])
-                return true;
-            isLoopExist |= isCyclic(child, vertex);
+    }
+    void dfs(int root){// dept first search T.C.: O(V+E)
+        if(visited[root])
+            return;
+        cout<< root<< endl;
+        visited[root]= true;
+        for(int child: dynamic_2d_vector[root]){
+            cout<<"Par "<<root<<" Child "<<child<< endl;
+            dfs(child); 
         }
-
-        return isLoopExist;
-    } 
+    }
     void reintialiseVisited(){
         for(int i=0;i<=v;i++)
             visited[i]= false;
     }
 };
-
-
 
 int main(){
 
@@ -76,17 +67,13 @@ int main(){
     Graph g(v, e);
     g.createGraphList();
     g.display();
+    int k= 1;
+    g.dfs(k);
+    g.reintialiseVisited();
     
-    bool isLoopExist= false;
-    for(int i=1;i<=g.v;i++){
-        if(g.visited[i])
-            continue;
-        if(g.isCyclic(i, 0)){
-            isLoopExist= true;
-            break;
-        }
-    }
-    cout<<isLoopExist<<endl;
+
+
+
 
 return 0;    
 }

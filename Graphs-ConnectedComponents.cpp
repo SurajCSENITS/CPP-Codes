@@ -47,27 +47,47 @@ public:
                 cout<<dynamic_2d_vector[i][j]<<" ";
             cout<< endl;
         }
-    } 
-    bool isCyclic(int vertex, int par) {
-        visited[vertex]= true;
-        bool isLoopExist= false;
-        for(int child: dynamic_2d_vector[vertex]){
-            if(visited[child] && child==par)
-                continue;
-            if(visited[child])
-                return true;
-            isLoopExist |= isCyclic(child, vertex);
+    }
+    void dfs(int root){// dept first search T.C.: O(V+E)
+        if(visited[root])
+            return;
+        cout<< root<< endl;
+        current_cc.push_back(root); // for connectedComponents()
+        visited[root]= true;
+        for(int child: dynamic_2d_vector[root]){
+            cout<<"Par "<<root<<" Child "<<child<< endl;
+            dfs(child); 
         }
-
-        return isLoopExist;
-    } 
+    }
     void reintialiseVisited(){
         for(int i=0;i<=v;i++)
             visited[i]= false;
     }
 };
 
+int connectedComponents(Graph g)
+{// no. of dfs = no. of connected components
+    int count= 0;
+    for(int i=1;i<=g.v;i++)
+    {
+        if(g.visited[i])
+            continue; // NOTE
+        else{
+            current_cc.clear(); // 
+            g.dfs(i);
+            cc.push_back(current_cc); // 
+            count++;
+        }
+    }
+    // for each loop in 2D vector
+    for(auto c_cc: cc){
+        for(int vertex: c_cc)
+            cout<< vertex<<" ";
+        cout<< endl;
+    }
 
+    return count;
+}
 
 int main(){
 
@@ -76,17 +96,12 @@ int main(){
     Graph g(v, e);
     g.createGraphList();
     g.display();
+    int k=  connectedComponents(g);
+    cout<<"Conneted components: "<< k;
     
-    bool isLoopExist= false;
-    for(int i=1;i<=g.v;i++){
-        if(g.visited[i])
-            continue;
-        if(g.isCyclic(i, 0)){
-            isLoopExist= true;
-            break;
-        }
-    }
-    cout<<isLoopExist<<endl;
+
+
+
 
 return 0;    
 }

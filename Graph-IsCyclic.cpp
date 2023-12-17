@@ -85,16 +85,7 @@ int main(){
     Graph g(v, e);
     g.createGraphList();
     g.display();
-    
-    bool isLoopExist= false;
-    for(int i=1;i<=g.v;i++){
-        if(g.visited[i])
-            continue;
-        if(g.isCyclic(i, 0)){
-            isLoopExist= true;
-            break;
-        }
-    }
+
     cout<<isCyclePresent(g)<<endl;
 
 return 0;    

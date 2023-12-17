@@ -10,7 +10,21 @@ using namespace std;
 #include <list>
 #include <bits/stdc++.h>
 
-
+/* 
+i/ps:
+1 2
+1 3
+1 13
+2 5
+3 4
+5 6
+5 7
+5 8
+4 9
+4 10
+8 12
+10 11
+*/
 class Tree
 {
 public:
@@ -36,29 +50,28 @@ public:
     }    
 };
 
-void subtreeSum(Tree t, vector<int>& ss, vector<int>& ec, int i= 1){
-    ss[i]+=i;
-    if(i%2==0) ec[i]++;
-    if(t.v[i][0]==-1) return; // leaf nodes are carrying -1 
+void dfsTree(int dept[], Tree t, int i, int count= 0){
+    dept[i]= count;
+    if(t.v[i][0] == -1) return;
+    count++;
     for(int child: t.v[i]){
-        subtreeSum(t, ss, ec, child);
-        ss[i]+= ss[child];
-        ec[i]+= ec[child];
+        dfsTree(dept, t, child, count);
     }
 }
 
+int* findDept(Tree t){
+    int* dept= new int[t.vert+1];
+    dfsTree(dept, t, 1);
+    return dept;
+}
 
 int main(){
 
     Tree t(13, 12);
     t.createTree();
-    vector<int> subtree_sum(t.vert+1, 0);
-    vector<int> even_count(t.vert+1, 0);
-    subtreeSum(t, subtree_sum, even_count);
-    for(int i=1;i<=t.vert;i++){
-        cout<< subtree_sum[i]<<" "<< even_count[i];
-        cout<< endl;
-    }
+    int* dept= findDept(t);
+    for(int i=1;i<=t.vert;i++)
+        cout<< dept[i]<<" ";
 
 return 0;    
 }

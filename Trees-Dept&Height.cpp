@@ -10,7 +10,21 @@ using namespace std;
 #include <list>
 #include <bits/stdc++.h>
 
-
+/* 
+i/ps:
+1 2
+1 3
+1 13
+2 5
+3 4
+5 6
+5 7
+5 8
+4 9
+4 10
+8 12
+10 11
+*/
 class Tree
 {
 public:
@@ -35,28 +49,27 @@ public:
         }
     }    
 };
-
-void subtreeSum(Tree t, vector<int>& ss, vector<int>& ec, int i= 1){
-    ss[i]+=i;
-    if(i%2==0) ec[i]++;
-    if(t.v[i][0]==-1) return; // leaf nodes are carrying -1 
+void dfsTree(Tree t, int i, vector<int>& dept, vector<int>& height){
+    if(t.v[i][0]==-1) return; // leaf node
     for(int child: t.v[i]){
-        subtreeSum(t, ss, ec, child);
-        ss[i]+= ss[child];
-        ec[i]+= ec[child];
+        dept[child]= dept[i] + 1;
+        dfsTree(t, child, dept, height);
+        height[i]= max(height[i], height[child]+1); // vapas laut te vakt
     }
 }
 
 
 int main(){
 
+    // leaf node -> height
+    // root node -> dept
     Tree t(13, 12);
     t.createTree();
-    vector<int> subtree_sum(t.vert+1, 0);
-    vector<int> even_count(t.vert+1, 0);
-    subtreeSum(t, subtree_sum, even_count);
+    vector<int> dept(t.vert+1, 0);
+    vector<int> height(t.vert+1, 0);
+    dfsTree(t, 1, dept, height);
     for(int i=1;i<=t.vert;i++){
-        cout<< subtree_sum[i]<<" "<< even_count[i];
+        cout<< dept[i]<<" "<<height[i];
         cout<< endl;
     }
 

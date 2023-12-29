@@ -49,6 +49,7 @@ public:
         }
     }    
 };
+
 void dfsTree(Tree t, int i, vector<int>& dept, vector<int>& height){
     if(t.v[i][0]==-1) return; // leaf node
     for(int child: t.v[i]){

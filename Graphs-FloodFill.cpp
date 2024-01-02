@@ -13,18 +13,6 @@ using namespace std;
 void FloodFill(vector<vector<int>>& image, int sr, int sc, int newColor)
 {
     int initialColor= 1;
-    if(sr>=image.size()) return;
-    if(sc>=image[0].size()) return;
-    if(sc<0) return;
-    if(sr<0) return;
-    if(image[sr][sc]==newColor) return;
-    if(image[sr][sc]!=initialColor) return;
-
-    image[sr][sc]= newColor;
-    FloodFill(image, sr+1, sc, newColor);
-    FloodFill(image, sr, sc+1, newColor);
-    FloodFill(image, sr, sc-1, newColor);
-    FloodFill(image, sr-1, sc, newColor);
     
 }
 

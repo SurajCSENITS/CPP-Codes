@@ -14,7 +14,7 @@ using namespace std;
 #include <unordered_map>
 #include <bits/stdc++.h>  
 
-int binarySearch(vector<int>& input, int target){// input can be sorted on the basis of some property
+int binarySearch(vector<int>& input, int target){// input is sorted on the basis of some property
     // define search space
     int lo= 0;
     int hi= input.size()-1;
@@ -39,7 +39,7 @@ int binarySearch_reccursion(vector<int>& input, int target, int lo, int hi){
 
 int main(){
 
-    // Binary Search is not affected by duplicate elements in a sorted array/rptated sorted array*
+    // Binary Search is not affected by duplicate elements in a sorted array/rotated sorted array*
     // * -> first and last index elements should be differrent
 
 return 0;    

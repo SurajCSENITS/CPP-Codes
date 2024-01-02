@@ -19,6 +19,7 @@ int findMinInSortedRotatedArr(vector<int> arr){
     if(arr.size()==1) return 0;
     int lo= 0;
     int hi= arr.size()-1;
+    if(arr[lo]<arr[hi]) return lo;
     while(lo<=hi){
         int mid= (lo+hi)/2;
         if(arr[mid]<arr[mid-1]) return mid;

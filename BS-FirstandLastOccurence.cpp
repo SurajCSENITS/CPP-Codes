@@ -21,7 +21,7 @@ int getFirstOccurence(vector<int>& arr, int target, int lo, int hi, int canditat
         canditate= mid;
         return getFirstOccurence(arr, target, lo, mid-1, canditate);
     }
-    if(arr[mid]>target) getFirstOccurence(arr, target, lo, mid-1, canditate);
+    if(arr[mid]>target) return getFirstOccurence(arr, target, lo, mid-1, canditate);
     else return getFirstOccurence(arr, target, mid+1, hi, canditate); 
 }
 
@@ -30,10 +30,10 @@ int getLastOccurence(vector<int>& arr, int target, int lo, int hi, int canditate
     int mid= (lo+hi)/2;
     if(arr[mid]==target){
         canditate= mid;
-        return getFirstOccurence(arr, target, mid+1, hi, canditate);
+        return getLastOccurence(arr, target, mid+1, hi, canditate);
     }
-    if(arr[mid]<target) getFirstOccurence(arr, target, mid+1, hi, canditate);
-    else return getFirstOccurence(arr, target, lo, mid-1, canditate); 
+    if(arr[mid]<target) return getLastOccurence(arr, target, mid+1, hi, canditate);
+    else return getLastOccurence(arr, target, lo, mid-1, canditate); 
 }
 
 // without reccursion

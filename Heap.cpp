@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include <cmath>
+#include <vector>
 #include <string>
 #include <time.h>
 #include <algorithm>

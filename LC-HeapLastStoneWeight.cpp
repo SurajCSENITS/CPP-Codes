@@ -17,15 +17,15 @@ using namespace std;
 
 class Solution{
 public:
-    void swap(pair<int, int>* a, pair<int, int>* b){
-        pair<int, int> temp= *a;
+    void swap(int* a, int* b){
+        int temp= *a;
         *a= *b;
         *b= temp;
     }
 
     class MaxHeap{
     public:
-        vector<pair<int, int>> v;
+        vector<int> v;
         int size;
         int capacity;
 
@@ -35,7 +35,7 @@ public:
             v.resize(capacity);
         }
 
-        void insertHeap(int item, int idx, Solution& obj){
+        void insertHeap(int item, Solution& obj){
             // check overflow
             if(size==capacity-1){
                 cout<<"Overflow"<<endl;
@@ -43,12 +43,12 @@ public:
             }
 
             size++;
-            v[size].first = item; v[size].second= idx;     
+            v[size] = item;     
             // sort
             int i= size;
-            while((i>1) && (v[i].first>v[i/2].first)){
+            while ((i>1) && (v[i] > v[i/2])){
                 obj.swap(&v[i], &v[i / 2]);
-                i= i/2;
+                i = i / 2;
             }
         }
 
@@ -65,11 +65,11 @@ public:
             int i= 1;
             while(2*i<=size){ // ek chota sa mistake
                 if(2*i+1>size){
-                    if(v[2*i].first>v[i].first) obj.swap(&v[i], &v[2*i]);
+                    if(v[2*i]>v[i]) obj.swap(&v[i], &v[2*i]);
                     break;
                 }
-                if(v[i].first>=v[2*i].first && v[i].first>=v[2*i+1].first) break;
-                if(v[2*i].first>v[2*i+1].first){
+                if(v[i]>=v[2*i] && v[i]>=v[2*i+1]) break;
+                if(v[2*i]>v[2*i+1]){
                     obj.swap(&v[i], &v[2*i]);
                     i= 2*i;
                 }
@@ -80,41 +80,35 @@ public:
             }
         }
 
-        pair<int, int> topHeap(){
-            if(size!=0) return v[1];
-            return make_pair(-1, -1);
+        int topHeap(){
+            if(size!=0) return v[1];               
+            return -1;
         }
     };
 
-    vector<string> findRelativeRanks(vector<int>& score){
+    int lastStoneWeight(vector<int>& stones){
         Solution obj;
-        vector<string> answer;
-        answer.resize(score.size());
-        // insert the scores with their indices in the heap
-        MaxHeap mh(score.size());
-        for(int i=0;i<score.size();i++) mh.insertHeap(score[i], i, obj);
-        int place= 1;
-        while(mh.size!=0){
-            pair<int, int> top= mh.topHeap();
-            if(place==1) answer[top.second]= "Gold Medal";
-            else if(place==2) answer[top.second]= "Silver Medal";
-            else if(place==3) answer[top.second]= "Bronze Medal";
-            else answer[top.second]= to_string(place);
-            place++;
-            mh.deleteHeap(obj);
-        }
-        return answer;
-    }
+        MaxHeap mh(stones.size());
+        // insert elements to heap
+        for(int ele: stones) mh.insertHeap(ele, obj);
+        while(mh.size>1){
+            int y= mh.topHeap(); mh.deleteHeap(obj);// larger one
+            int x= mh.topHeap(); mh.deleteHeap(obj);// 2nd larger one
 
+            int wtAfterCollsion= y-x;
+            if(wtAfterCollsion==0) continue;
+            mh.insertHeap(wtAfterCollsion, obj);
+        }
+        if(mh.size==0) return 0;
+        return mh.v[1];
+    }
 };
 
 int main(){
 
     Solution obj;
-    vector<int> score= {10,3,8,9,4};
-    vector<string> answer= obj.findRelativeRanks(score);
-    for(auto str: answer) cout<< str<<" ";
-    
+    vector<int> stones= {2,7,4,1,8,1};
+    cout<< obj.lastStoneWeight(stones);
 
 return 0;    
 }

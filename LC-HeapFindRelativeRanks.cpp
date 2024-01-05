@@ -23,7 +23,7 @@ public:
         *b= temp;
     }
 
-    class MaxHeap{
+    class MaxHeap{ // heap of pairs***
     public:
         vector<pair<int, int>> v;
         int size;
@@ -35,7 +35,7 @@ public:
             v.resize(capacity);
         }
 
-        void insertHeap(int item, int idx, Solution& obj){
+        void insertHeap(int value, int idx, Solution& obj){
             // check overflow
             if(size==capacity-1){
                 cout<<"Overflow"<<endl;
@@ -43,7 +43,7 @@ public:
             }
 
             size++;
-            v[size].first = item; v[size].second= idx;     
+            v[size].first = value; v[size].second= idx;
             // sort
             int i= size;
             while((i>1) && (v[i].first>v[i/2].first)){
@@ -113,7 +113,7 @@ int main(){
     Solution obj;
     vector<int> score= {10,3,8,9,4};
     vector<string> answer= obj.findRelativeRanks(score);
-    for(auto str: answer) cout<< str<<" ";
+    for(auto str: answer) cout<< str<< " ";
     
 
 return 0;    

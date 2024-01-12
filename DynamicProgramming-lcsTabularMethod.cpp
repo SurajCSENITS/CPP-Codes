@@ -14,7 +14,7 @@ using namespace std;
 #include <unordered_map>
 #include <bits/stdc++.h>  
 
-
+// DynamicProgramming
 pair<string, int> lcsTabularMethod(string s1, string s2){
     vector<vector<int>> dp(s1.length()+1);
     for(auto& row: dp) row.resize(s2.length()+1, 0);
@@ -43,19 +43,12 @@ pair<string, int> lcsTabularMethod(string s1, string s2){
     return make_pair(lcs, dp[m-1][n-1]);
 }
 
-pair<string, int>  longest_palindromic_subsequence(string s){
-    string s_rev= s;
-    reverse(s_rev.begin(), s_rev.end());
-    pair<string, int> lps= lcsTabularMethod(s, s_rev);
-    return lps;
-}
-
-
 int main(){
 
-    string s= "ABDCBTAP";
-    pair<string, int> lps= longest_palindromic_subsequence(s);
-    cout<< lps.first<<" "<< lps.second;
+    string s1= "ABCAB";
+    string s2= "AECB";
+    pair<string, int> lcs= lcsTabularMethod(s1, s2);
+    cout<< lcs.first<<" "<< lcs.second;
 
 return 0;    
 }

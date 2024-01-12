@@ -1,4 +1,4 @@
--> inding a unique index for all elements to store them is known as hashing
+-> finding a unique index for all elements to store them is known as hashing
 The unique index -> hash value
 Function applied to find the hash value->hash function
 

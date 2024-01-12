@@ -22,7 +22,7 @@ pair<string, int> lcsTabularMethod(string s1, string s2){
     int n= dp[0].size();
 
     for(int i=1;i<m;i++){
-        for(int j=1;j<n;j++){ // at any instant the lcs upto the length i,j will be in dp[i][j]
+        for(int j=1;j<n;j++){
             if(s1[i-1]==s2[j-1]) dp[i][j]= dp[i-1][j-1]+1;
             else dp[i][j]= max(dp[i-1][j], dp[i][j-1]);
         }
@@ -43,19 +43,16 @@ pair<string, int> lcsTabularMethod(string s1, string s2){
     return make_pair(lcs, dp[m-1][n-1]);
 }
 
-pair<string, int>  longest_palindromic_subsequence(string s){
-    string s_rev= s;
-    reverse(s_rev.begin(), s_rev.end());
-    pair<string, int> lps= lcsTabularMethod(s, s_rev);
-    return lps;
+int minOperationsForS1toS2(string s1, string s2){// min insertion and deletion required  to convert s1 into s2
+    pair<string, int> lcs= lcsTabularMethod(s1, s2);
+    return s1.length() - lcs.second + s2.length() - lcs.second; // deletions + insertions
 }
-
 
 int main(){
 
-    string s= "ABDCBTAP";
-    pair<string, int> lps= longest_palindromic_subsequence(s);
-    cout<< lps.first<<" "<< lps.second;
+    string s1= "ABCA";
+    string s2= "ACDB";
+    cout<< minOperationsForS1toS2(s1, s2);
 
 return 0;    
 }

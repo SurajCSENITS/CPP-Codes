@@ -17,6 +17,7 @@ using namespace std;
 int main(){
 
     map<string, int> directory;// string->keyDatatype int->valueDatatype
+    // map<int, char ,greater<int>> m;
 
     //insertion in a map
     directory["naman"]= 3876; // directory[key]=value

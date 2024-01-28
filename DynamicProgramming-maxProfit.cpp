@@ -25,9 +25,9 @@ int maxProfit(int capacity, vector<int>& weight, vector<int>& price, vector<vect
             int v2= maxProfit(capacity, weight, price, dp, value, i+1); // if we not take weight[i]
             value= max(v1, v2);
         }
+        dp[capacity][i]= value;
     }
 
-    dp[capacity][i]= value;
     return value;
 }
 

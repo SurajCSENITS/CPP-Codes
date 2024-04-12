@@ -142,7 +142,7 @@ public:
 
     bool isEqualtree(Node* root, Node* subroot){
         if(root==nullptr and subroot==nullptr) return true;
-        if(root==nullptr || subroot==nullptr) return true;
+        if(root==nullptr || subroot==nullptr) return false;
         if(root->data!=subroot->data) return false;
         return isEqualtree(root->left, subroot->left) and isEqualtree(root->right, subroot->right);
     }

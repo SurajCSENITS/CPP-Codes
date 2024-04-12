@@ -24,24 +24,24 @@ int longest_common_subsequence(string s1, string s2, vector<vector<int>>& dp){
         s1.pop_back();
         s2.pop_back();
 
-        dp[s1.length()-1][s2.length()-1]= longest_common_subsequence(s1, s2, dp);
-        return 1+dp[s1.length()-1][s2.length()-1];
+        // dp[s1.length()-1][s2.length()-1]= longest_common_subsequence(s1, s2, dp);
+        return dp[s1.length()][s2.length()]= 1+longest_common_subsequence(s1, s2, dp);
     }
     // else
     char temp= s2.back();
     s2.pop_back();
     int l1= longest_common_subsequence(s1, s2, dp);
-    dp[s1.length()-1][s2.length()-1]= l1;
+    // dp[s1.length()-1][s2.length()-1]= l1;
     s2= s2+temp;
 
     temp= s1.back();
     s1.pop_back();
     int l2= longest_common_subsequence(s1, s2, dp);
-    dp[s1.length()-1][s2.length()-1]= l2;
+    // dp[s1.length()-1][s2.length()-1]= l2;
     s1= s1+temp;
 
     dp[s1.length()-1][s2.length()-1]= max(l1, l2);
-    return max(l1, l2);
+    return dp[s1.length()-1][s2.length()-1];
 }
 
 

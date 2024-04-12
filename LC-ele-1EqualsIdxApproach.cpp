@@ -15,7 +15,7 @@ using namespace std;
 #include <unordered_map>
 #include <bits/stdc++.h>
 
-vector<int> findDuplicates(vector<int>& nums){
+vector<int> findDuplicates(vector<int>& nums){ // https://youtu.be/aMsSF1Il3IY
     // ele-1 == idx approach | when 1<=ele<=n | SC: O(1)
     int n= nums.size();
     vector<int> answer;

@@ -35,10 +35,12 @@ int longestSumSubArray(vector<int>& v, int k){
             dq.push_back(v[i]);
             i++;
         }
-        dq.push_back(v[i]);
-        sum+= v[i];
-        if(sum==k) ans= dq.size();
-        i++;
+        else{ // *** added
+            dq.push_back(v[i]);
+            sum+= v[i];
+            if(sum==k) ans= dq.size();
+            i++;
+        }
     }
     return ans;
 }

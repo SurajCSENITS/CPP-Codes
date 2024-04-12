@@ -19,9 +19,8 @@ using namespace std;
 
 
 int minSubArrayLen(int target, vector<int>& nums){
-    int candidate= INT32_MAX;
-    deque<int> dq;
     int sum= 0, candidate= INT32_MAX;
+    deque<int> dq;
     for(int i=0;i<nums.size();i++){
         dq.push_back(nums[i]);
         sum+= nums[i];

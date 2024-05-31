@@ -56,7 +56,6 @@ void fillRow(vector<vector<char>>& board, int row){
             board[row][j]= '.';
         }
     }
-
     return;
 }
 

@@ -55,8 +55,6 @@ public:
         }
     }
 
-    void reset(){ for(int i=0;i<isVisited.size();i++) isVisited[i]= false; }
-       
     void dfs(int vertex){
         if(isVisited[vertex]) return;
 
@@ -92,57 +90,17 @@ public:
         depthNheightUtil(depth, height);
         return make_pair(depth, height);
     }
-
-    void sumNcountUtil(vector<int>& subtreeSum, vector<int>& evenCount, int vertex= 1){
-        isVisited[vertex]= true;
-        subtreeSum[vertex]+= vertex;
-        evenCount[vertex]+= vertex%2==0 ? 1 : 0;
-        for(int child: tree[vertex]){
-            if(isVisited[child]) continue;
-            sumNcountUtil(subtreeSum, evenCount, child);
-            subtreeSum[vertex]+= subtreeSum[child];
-            evenCount[vertex]+= evenCount[child];
-        }
-    }
-
-    pair<vector<int>, vector<int>> getSubtreeSumNdEvenCount(){
-        vector<int> subtreeSum(vert+1, 0);
-        vector<int> evenCount(vert+1, 0);
-        sumNcountUtil(subtreeSum, evenCount);
-        return make_pair(subtreeSum, evenCount);
-    }
-
-    int getMaxDepth(int vertex= 1){
-        isVisited[vertex]= true;
-        int maxDepth= 0;
-        for(int child: tree[vertex]){
-            if(isVisited[child]) continue;
-            maxDepth= max(maxDepth, getMaxDepth(child)+1);
-        }
-        return maxDepth;
-    }
-
-    int diameter(){
-        /*
-        #trick to find diamter in a tree
-            1. With any root find the maxm-depth-node
-            2. With that node as root find the maxm depth, which is the diameter of the tree
-        */ 
-        vector<int> depth= getDepthNdHeight().first;
-        int maxDepth= INT32_MIN, maxDepthNode;
-        for(int node=1;node<=vert;node++) if(maxDepth<depth[node]) maxDepth= depth[node], maxDepthNode= node;     
-        // Reset the isVisited array
-        reset();
-        int diameter= getMaxDepth(maxDepthNode);
-        return diameter;
-    }
 };
 
 int main(){
 
     Tree t(13, 12);
     t.adjacencyList();
-    cout<< t.diameter();
+    pair<vector<int>, vector<int>> info= t.getDepthNdHeight();
+    for(int d: info.first) cout<< d<< " ";
+    cout<< endl;
+    for(int h: info.second) cout<< h<< " ";
+    cout<< endl;
 
 return 0;    
 }

@@ -6,74 +6,42 @@ using namespace std;
 #include <string>
 #include <stack>
 #include <queue>
+#include <deque>
 #include <algorithm>
+#include <list>
+#include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 #include <bits/stdc++.h>
 
-class Node{
-public:
-    int val;
-    Node* next;
-
-    Node(int item){
-        val= item;
-        next= NULL;
-    }
-};
+// Note: 'v' num of vertices => nodes val lies betn 1 to 'v'
 
 class Graph{
 private:
-    Node** list;
-    int v; 
-    int e;
+    int vert;
+    int edge;
+    vector<vector<int>> graph;
 public:
-    Graph(int vert, int edge){
-        v= vert;
-        e= edge;
-        list = new Node*[v];  // Allocate memory for the list
-
-        for(int i=0;i<v;i++)
-            list[i]= new Node(i);
+    Graph(int v, int e){
+        vert= v, edge= e;
+        graph.resize(vert+1);
     }
-    void createGraph()
-    {
-        cout<<"Enter adjacent vertices(a pair should be entered only once, irrespective of its order)"<<endl;
-        for(int i=0;i<e;i++){
-            int a, b;
-            cin>>a>>b;
-            // a->next= b b->next= a
-            Node* temp= list[a];
-            while(temp->next!=NULL)
-                temp= temp->next;
-            Node* new_node= new Node(b);
-            temp->next= new_node;
 
-            temp= list[b];
-            while(temp->next!=NULL)
-                temp= temp->next;
-            new_node= new Node(a);
-            temp->next= new_node;
-        }
-    }
-    void display(){
-        for(int i=0;i<v;i++){
-            Node* temp= list[i];
-            while(temp!=NULL){
-                cout<<temp->val<<" ";
-                temp= temp->next;
-            }
-            cout<< endl;
+    void adjacencyList(){
+        cout<< "Enter Connected Nodes: "<< endl;
+        for(int i=0;i<edge;i++){
+            int v1, v2;
+            cin>> v1>> v2;
+            graph[v1].push_back(v2);
+            graph[v2].push_back(v1);
         }
     }
 };
 
 int main(){
 
-    int v, e;
-    cin>>v;
-    cin>>e;
-    Graph gph(v, e);
-    gph.createGraph();
-    gph.display();
+
 
 return 0;    
 }

@@ -6,48 +6,41 @@ using namespace std;
 #include <string>
 #include <stack>
 #include <queue>
+#include <deque>
 #include <algorithm>
+#include <list>
+#include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 #include <bits/stdc++.h>
 
-int** createGraph(int v, int e)
-{
-    // create an adjacency matrix of VxV
-    // Allocate memory for v rows of int*
-    int** adj = new int*[v];
-    // Allocate memory for each row
-    for (int i = 0; i < v; ++i) {
-        adj[i] = new int[v];
+// Note: 'v' num of vertices => nodes val lies betn 1 to 'v'
+
+class Graph{
+private:
+    int vert;
+    int edge;
+    vector<vector<int>> graph;
+public:
+    Graph(int v, int e){
+        vert= v, edge= e;
+        graph.resize(vert+1, vector<int>(vert+1, 0));
     }
 
-    for(int i=0;i<v;i++){
-        for(int j=0;j<v;j++){
-            adj[i][j]= 0;
+    void adjacencyMatrix(){
+        cout<< "Enter Connected Nodes: "<< endl;
+        for(int i=0;i<edge;i++){
+            int v1, v2;
+            cin>> v1>> v2;
+            graph[v1][v2]= graph[v2][v1]= 1;
         }
     }
-
-    cout<<"Enter adjacent vertices(a pair should be entered only once, irrespective of its order)"<<endl;
-    for(int i=0;i<e;i++){// no. of traversals = no. of edges
-        int a, b;
-        cin>>a>>b;
-        adj[a][b]= 1;
-        adj[b][a]= 1;
-    }
-
-    return adj;
-
-}
+};
 
 int main(){
 
-    int v, e;
-    cin>>v;
-    cin>>e;
-    int** graph= createGraph(v, e);
-    for(int i=0;i<v;i++){
-        for(int j=0;j<v;j++)
-            cout<< graph[i][j]<<" ";
-        cout<< endl;
-    }
+
 
 return 0;    
 }

@@ -55,8 +55,6 @@ public:
         }
     }
 
-    void reset(){ for(int i=0;i<isVisited.size();i++) isVisited[i]= false; }
-       
     void dfs(int vertex){
         if(isVisited[vertex]) return;
 
@@ -111,93 +109,17 @@ public:
         sumNcountUtil(subtreeSum, evenCount);
         return make_pair(subtreeSum, evenCount);
     }
-
-    int getMaxDepth(int vertex= 1){
-        int maxDepth= 0;
-        isVisited[vertex]= true;
-        for(int child: tree[vertex]){
-            if(isVisited[child]) continue;
-            maxDepth= max(maxDepth, getMaxDepth(child)+1);
-        }
-        return maxDepth;
-    }
-
-    int diameter(){
-        /*
-        #trick to find diamter in a tree
-            1. With any root find the maxm-depth-node
-            2. With that node as root find the maxm depth, which is the diameter of the tree
-        */ 
-        vector<int> depth= getDepthNdHeight().first;
-        int maxDepth= INT32_MIN, maxDepthNode;
-        for(int node=1;node<=vert;node++) if(maxDepth<depth[node]) maxDepth= depth[node], maxDepthNode= node;     
-        // Reset the isVisited array
-        reset();
-        int diameter= getMaxDepth(maxDepthNode);
-        return diameter;
-    }
-
-    vector<int> getPath(int target, int vertex= 1){
-        vector<int> path;
-        isVisited[vertex]= true;
-        if(target==vertex){
-            path.push_back(vertex);
-            return path;
-        }
-
-        for(int child: tree[vertex]){
-            if(isVisited[child]) continue;
-            vector<int> childToTarget= getPath(target, child);
-            if(not childToTarget.empty()){
-                path= childToTarget;
-                path.insert(path.begin(), vertex);
-                return path;
-            }
-        }
-        return path;
-    }   
-
-    int lca(int node1, int node2){
-        /*
-            find the paths of two nodes from root
-            from those two paths the farthest common node is the lca
-        */
-       vector<int> path1= getPath(node1);
-       reset(); // reset isVisited
-       vector<int> path2= getPath(node2);
-       int lca= -1;
-       for(int i=0;i<min(path1.size(), path2.size());i++){
-            if(path1[i]!=path2[i]) return lca;
-            lca= path1[i];
-       }
-       return lca;
-    }
-
-    void maximize(int& maxProduct, vector<int>& subtreeSum, int vertex= 1){
-        isVisited[vertex]= true;
-        for(int child: tree[vertex]){
-            if(isVisited[child]) continue;
-            int sum1= subtreeSum[1]-subtreeSum[child];
-            int sum2= subtreeSum[child];
-            maxProduct= max(maxProduct, sum1*sum2);
-            maximize(maxProduct, subtreeSum, child);
-        }
-    }
-
-    int maximizeProductAfterEdgeDeletion(){
-        vector<int> subtreeSum= getSubtreeSumNdEvenCount().first;
-        reset();
-        int maxProduct= INT32_MIN;
-        maximize(maxProduct, subtreeSum);
-        return maxProduct;
-    }
 };
 
 int main(){
 
     Tree t(13, 12);
     t.adjacencyList();
-    cout<< t.maximizeProductAfterEdgeDeletion();
+    pair<vector<int>, vector<int>> info= t.getSubtreeSumNdEvenCount();
+    for(int s: info.first) cout<< s<< " ";
+    cout<< endl;
+    for(int c: info.second) cout<< c<< " ";
+    cout<< endl;
 
 return 0;    
 }

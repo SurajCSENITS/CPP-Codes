@@ -6,87 +6,86 @@ using namespace std;
 #include <string>
 #include <stack>
 #include <queue>
+#include <deque>
 #include <algorithm>
 #include <list>
+#include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 #include <bits/stdc++.h>
 
-class Graph
-{
+// Note: 'v' num of vertices => nodes val lies betn 1 to 'v'
+
+class Graph{
+private:
+    int vert;
+    int edge;
+    vector<vector<int>> graph;
+    vector<bool> isVisited;
 public:
-    int v;
-    int e;
-    vector<vector<int>> dynamic_2d_vector;
-    bool* visited;
-
-    Graph(int vert, int edge){
-        v= vert;
-        e= edge;
-        dynamic_2d_vector.resize(v+1); // assuming 1 base indexing
-
-        visited= new bool[v+1];
-        for(int i=0;i<=v;i++)
-            visited[i]= false;
+    Graph(int v, int e){
+        vert= v, edge= e;
+        graph.resize(vert+1);
+        isVisited.resize(vert+1, false);
     }
-    void createGraphList(){
-        cout<<"Enter adjacent vertices(a pair should be entered only once, irrespective of its order)"<<endl;
-        for(int i=0;i<e;i++){// no. of traversals = no. of edges
+
+    void adjacencyList(){
+        cout<< "Enter Connected Nodes: "<< endl;
+        for(int i=0;i<edge;i++){
             int v1, v2;
-            cin>>v1>>v2;
-            dynamic_2d_vector[v1].push_back(v2);
-            dynamic_2d_vector[v2].push_back(v1);
+            cin>> v1>> v2;
+            graph[v1].push_back(v2);
+            graph[v2].push_back(v1);
         }
     }
-    void display(){
-        for(int i=1;i<=v;i++){
-            cout<<i<<" ";
-            for(int j=0;j<dynamic_2d_vector[i].size();j++)
-                cout<<dynamic_2d_vector[i][j]<<" ";
-            cout<< endl;
-        }
-    } 
-    bool isCyclic(int vertex, int par) {
-        visited[vertex]= true;
-        bool isLoopExist= false;
-        for(int child: dynamic_2d_vector[vertex]){
-            if(visited[child] && child==par)
-                continue;
-            if(visited[child])
-                return true;
-            isLoopExist |= isCyclic(child, vertex);
-        }
 
-        return isLoopExist;
-    } 
-    void reintialiseVisited(){
-        for(int i=0;i<=v;i++)
-            visited[i]= false;
+    void dfs(int vertex){
+        if(isVisited[vertex]) return;
+
+        // process curr vertex
+        isVisited[vertex]= true;
+        // cout<< vertex<< " ";
+        for(int child: graph[vertex]) dfs(child);
+    }
+
+    int connectedComponents(){
+        int count= 0;
+        for(int vertex=1;vertex<=vert;vertex++){
+            if(isVisited[vertex]) continue;
+            count++;
+            dfs(vertex);
+        }
+        return count;
+    }
+
+    bool helper(int vertex, int parent= -1){
+        isVisited[vertex]= true;
+        for(int child: graph[vertex]){
+            if(isVisited[child] and child!=parent) return true;
+            if(isVisited[child]) continue;
+            if(helper(child, vertex)) return true;
+        }
+        return false;
+    }
+
+    bool isCyclic(){
+        // There can be more than 1 connected components
+        bool doesLoopExist= false;
+        for(int v=1;v<=vert;v++){
+            if(isVisited[v]) continue;
+            doesLoopExist|= helper(v);
+            if(doesLoopExist) break;
+        }
+        return doesLoopExist;
     }
 };
 
-bool isCyclePresent(Graph g)
-{
-    bool isLoopExist= false;
-    for(int i=1;i<=g.v;i++){
-        if(g.visited[i])
-            continue;
-        if(g.isCyclic(i, 0)){
-            isLoopExist= true;
-            break;
-        }
-    }
-    
-    return isLoopExist;
-}
-
 int main(){
 
-    int v, e;
-    cin>>v>>e;
-    Graph g(v, e);
-    g.createGraphList();
-    g.display();
-
-    cout<<isCyclePresent(g)<<endl;
+    Graph gph(8, 6);
+    gph.adjacencyList();
+    cout<< gph.isCyclic();
 
 return 0;    
 }

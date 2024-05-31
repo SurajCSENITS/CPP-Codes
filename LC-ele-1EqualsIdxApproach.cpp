@@ -15,6 +15,8 @@ using namespace std;
 #include <unordered_map>
 #include <bits/stdc++.h>
 
+// paint using one element to the other element
+// duplicate elements will try to pain the same element
 vector<int> findDuplicates(vector<int>& nums){ // https://youtu.be/aMsSF1Il3IY
     // ele-1 == idx approach | when 1<=ele<=n | SC: O(1)
     int n= nums.size();

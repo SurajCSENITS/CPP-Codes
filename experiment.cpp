@@ -15,19 +15,11 @@ using namespace std;
 #include <unordered_map>
 #include <bits/stdc++.h>
 
-vector<int> findDuplicates(vector<int>& nums){
-    // ele-1 == idx approach | when 1<=ele<=n | SC: O(1)
-    int n= nums.size();
-    vector<int> answer;
-    for(int ele: nums){
-        int idx= abs(ele)-1;
-        if(nums[idx]<0) answer.push_back(abs(ele));
-        else nums[idx]= -nums[idx];
-    }
-    return answer;
+vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges){
+    
 }
 
-int main(){    
+int main(){
 
 
 

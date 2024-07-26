@@ -197,7 +197,7 @@ void deleteKthFromEnd(Node* head, int k){
     // single traversal method
     Node* l= head;
     Node* r= head;
-    while(k) r= r->next;
+    while(k) r= r->next, k--;
     if(r==nullptr){
         head= head->next;
         free(l);
@@ -239,7 +239,7 @@ Node* mergeKSortedList(vector<Node*>& heads){
         Node* ll2= heads.back();
         heads.pop_back();
         Node* merged_ll= mergeSortedList(ll1, ll2);
-        heads.push_back(merged_ll);
+        heads.insert(heads.begin(), merged_ll);
     }
     return heads.back();
 }
@@ -252,27 +252,31 @@ Node* getMiddleNode(Node* head){
 }
 
 bool isCyclic(Node* head){
+    if(head==nullptr or head->next==nullptr or head->next->next==nullptr) return;
+
     Node* slow= head;
     Node* fast= head;
     bool isCyclic= false;
     do{
         fast= fast->next->next;
         slow= slow->next;
-    } while(fast!=nullptr and slow!=fast);
+    } while(fast!=nullptr and fast->next!=nullptr and slow!=fast);
 
     if(slow==fast) isCyclic= true;
     return isCyclic;
 }
 
 void removeCycle(Node* head){
+    if(head==nullptr or head->next==nullptr or head->next->next==nullptr) return;
+
     Node* slow= head;
     Node* fast= head;
     do{
         fast= fast->next->next;
         slow= slow->next;
-    } while(fast!=nullptr and slow!=fast);
+    } while(fast!=nullptr and fast->next!=nullptr and slow!=fast);
 
-    if(fast==nullptr) return; // No cycle present
+    if(fast==nullptr or fast->next==nullptr) return; // No cycle present
     fast= head; // Now keep advancing slow and fast pointers by 1 step
     while(slow->next!=fast->next) slow= slow->next, fast= fast->next;
     slow->next= nullptr; // slow pointing to the last node 

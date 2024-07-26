@@ -35,7 +35,7 @@ void reduceArray(int array[], int n, int prevMin= INT_MIN, int count= 0)
 int main(){
 
     int array[]= {10,16,7,14,5,3,12,9};
-    updateArray(array, 8);
+    reduceArray(array, 8);
     for(int i=0;i<8;i++)
         cout<< array[i]<<" ";
 

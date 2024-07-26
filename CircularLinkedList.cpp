@@ -35,7 +35,7 @@ public:
 
     void insertAthead(int val){
         Node* new_node= new Node(val);
-        if(head){
+        if(head==nullptr){
             head= new_node;
             head->next= head;
             return;

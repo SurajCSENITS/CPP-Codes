@@ -34,7 +34,7 @@ void outputDiff(int n, int q){
         if(a!=b){
             st.erase(st.find(size[a])), st.erase(st.find(size[b]));
             st.insert(size[a]+size[b]);
-            if(a<b) swap(a, b);
+            if(size[a]<size[b]) swap(a, b);
             parent[b]= a, size[a]+= size[b];
         }
         int mx= *(--st.end());

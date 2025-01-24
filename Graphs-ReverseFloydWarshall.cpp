@@ -42,7 +42,8 @@ vector<int> getSumBeforeNodeDeletion(vector<vector<int>>& distance, vector<int> 
 
 int main(){
 
-
+    // floyd warshall k= 0, 1, 2
+    // ke liye chala liya matlab, 0 1 2 ke bich ke sabhi mutual distances min honge
 
 return 0;    
 }

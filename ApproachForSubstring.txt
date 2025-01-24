@@ -1,0 +1,8 @@
+1. Ending approach
+2. Expand from center (different for even & odd)
+3. Find the break point, divide into left and right about that point
+
+1. Koi ek substring dusre kisi string me present h ki nhi wo check karne ka ek hi approach hi
+   `sliding window` i.e., O(N*M) TC
+   Rabin Karp bass usko thora optimize kar deta h
+2. Also try to remember the use of Binary search in Length in range related problems

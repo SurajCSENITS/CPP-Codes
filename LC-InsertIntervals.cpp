@@ -16,6 +16,8 @@ using namespace std;
 #include <bits/stdc++.h> 
 
 
+// see leetcode 57
+
 vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval){
     // in overlapping always resultant LHL = min(l1, l2) and RHL = max(r1, r2)
     int start= newInterval.front(), end= newInterval.back();

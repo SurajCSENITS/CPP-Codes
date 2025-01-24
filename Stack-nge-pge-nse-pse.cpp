@@ -68,8 +68,8 @@ vector<int> pse(vector<int>& nums){
     // reverese nums // find nse_arr // pse_arr = rev of nse_arr
     reverse(nums.begin(), nums.end());
 
-    vector<int> pse_arr(nums.size(), -1);
     stack<int> st; // to store index of nums
+    vector<int> pse_arr(nums.size(), -1);
     st.push(0);
     for(int i=1;i<nums.size();i++){
         while(!st.empty() && nums[i]<nums[st.top()]){
